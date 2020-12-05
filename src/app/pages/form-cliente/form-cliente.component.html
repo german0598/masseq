@@ -1,0 +1,88 @@
+<div class="cont-form">
+  <form [formGroup]="formCliente" (ngSubmit)="guardarCliente()">
+    <!-- [formControlName]="formControlName" -->
+    <div class="form-group row">
+      <!-- Tipo de documento -->
+      <div class="col-12 col-md-2">
+        <label class="col-form-label">Tipo de documento</label>
+        <select class="form-control form-control-sm" formControlName="tipoDocumento">
+          <option *ngFor="let documento of tiposDeDocumento" [value]="documento.id">
+            {{ documento.nombre }}
+          </option>
+        </select>
+        <div *ngIf="!mostrarErrorInput('tipoDocumento')" class="error-message-input">
+          Este campo es obligatorio
+        </div>
+      </div>
+      <!-- Numero de documento -->
+      <div class="col-12 col-md-3">
+        <label class="col-form-label">Número de documento</label>
+        <input class="form-control form-control-sm" type="text" formControlName="numeroDocumento" placeholder="Número documento">
+        <div *ngIf="!mostrarErrorInput('numeroDocumento')" class="error-message-input">
+          Este campo es obligatorio
+        </div>
+      </div>
+      <!-- Nombres -->
+      <div class="col-12 col-md-7">
+        <label class="col-form-label">Nombre completo del cliente</label>
+        <input class="form-control form-control-sm" type="text" formControlName="nombres" placeholder="Nombres">
+        <div *ngIf="!mostrarErrorInput('nombres')">
+          Este campo es obligatorio
+        </div>
+      </div>
+      <!-- Departamento -->
+      <div class="form-group col-md-4">
+        <label class="col-form-label">Departamento</label>
+        <select class="form-control form-control-sm" formControlName="departmento">
+          <option *ngFor="let departamento of departamentos" [value]="departamento.id">
+            {{ departamento.nombre }}
+          </option>
+        </select>
+        <div *ngIf="!mostrarErrorInput('departmento')" class="error-message-input">
+          Este campo es obligatorio
+        </div>
+      </div>
+      <!-- Municipio -->
+      <div class="form-group col-md-4">
+        <label class="col-form-label">Municipios</label>
+        <select class="form-control form-control-sm" formControlName="municipio">
+          <option *ngFor="let municipio of municipios" [value]="municipio.id">
+            {{ municipio.nombre }}
+          </option>
+        </select>
+        <div *ngIf="!mostrarErrorInput('municipio')" class="error-message-input">
+          Este campo es obligatorio
+        </div>
+      </div>
+      <!-- Dirección -->
+      <div class="col-12 col-md-4">
+        <label class="col-form-label">Dirección</label>
+        <input class="form-control form-control-sm" formControlName="direccion" type="text" placeholder="Dirección">
+        <div *ngIf="!mostrarErrorInput('direccion')" class="error-message-input">
+          Este campo es obligatorio
+        </div>
+      </div>
+      <!-- Correo -->
+      <div class="col-12 col-md-4">
+        <label class="col-form-label">Correo electrónico</label>
+        <input class="form-control form-control-sm" formControlName="email" type="text" placeholder="ejemplo@gmail.com">
+        <div *ngIf="!mostrarErrorInput('email')" class="error-message-input">
+          Este campo es obligatorio
+        </div>
+      </div>
+      <!-- Télefono -->
+      <div class="col-12 col-md-4">
+        <label class="col-form-label">Teléfono</label>
+        <input class="form-control form-control-sm" formControlName="telefone" type="text" placeholder="Número celular">
+        <div *ngIf="!mostrarErrorInput('telefone')" class="error-message-input">
+          Este campo es obligatorio
+        </div>
+      </div>
+      <!-- BOTONES  -->
+      <div class="col-12 mt-3 d-flex justify-content-center">
+        <button type="button" class="btn btn-outline-danger mr-3" (click)="regresar()">Cancelar</button>
+        <button type="submit" class="btn btn-outline-success">Guardar</button>
+      </div>
+    </div>
+  </form>
+</div>

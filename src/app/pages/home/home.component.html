@@ -1,0 +1,45 @@
+<div class="cont-home">
+  <!-- TITULO -->
+  <div class="title text-center">
+    NUESTROS CLIENTES
+  </div>
+  <div class="btn-crear">
+    <button type="button" class="btn btn-outline-primary" (click)="formCliente()">Nuevo cliente</button>
+  </div>
+  <!-- TABLA DE CLIENTES -->
+  <div class="cont-clientes w-100 d-flex justify-content-center align-items-center">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="text-left w-20" scope="col">Documento</th>
+          <th class="text-left w-15" scope="col">Nombres</th>
+          <th class="text-left w-20" scope="col">Dirección</th>
+          <th class="text-left w-30" scope="col">Correo electrónico</th>
+          <th class="text-left w-10" scope="col">Departamento</th>
+          <th class="text-left w-10" scope="col">Municipio</th>
+          <th class="text-center w-5" scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td class="text-left w-20" >{{ cliente.numeroDocumento }}</td>
+          <td class="text-left w-15" >{{ cliente.nombres }}</td>
+          <td class="text-left w-20" >{{ cliente.direccion }}</td>
+          <td class="text-left w-30" >{{ cliente.email }}</td>
+          <td class="text-left w-10" >{{ cliente.departmento }}</td>
+          <td class="text-left w-10" >{{ cliente.municipio }}</td>
+          <td class="text-center w-5">
+            <span
+              class="material-icons mr-2"
+              style="cursor:pointer; color: #1976d2;"
+              (click)="formCliente( cliente.id )">create</span>
+            <span
+              class="material-icons"
+              style="cursor:pointer; color: #df413a;"
+              (click)="eliminarCliente( cliente.id )">delete</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
