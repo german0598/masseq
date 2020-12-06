@@ -45,40 +45,35 @@ export class HomeComponent implements OnInit {
     // this.generalService
   }
 
-  eliminarCliente( idCliente: number ): void {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success mr-3',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    });
+  async eliminarCliente( idCliente: number ): Promise<any> {
+    const respuesta = await this.confirmacionEliminacion();
+    if (respuesta) {
+      console.log('ACEPTO: ', respuesta);
+    }
+  }
 
-    swalWithBootstrapButtons.fire({
-      title: 'Atención!',
-      text: '¿Estas seguro que deseas eliminar este cliente?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        swalWithBootstrapButtons.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelled',
-          'Your imaginary file is safe :)',
-          'error'
-        )
-      }
-    })
+  confirmacionEliminacion(): Promise<any> {
+    return new Promise( (resolve, reject) => {
+
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success mr-3',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+
+      return swalWithBootstrapButtons.fire({
+        title: 'Atención!',
+        text: '¿Estas seguro que deseas eliminar este cliente?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        return resolve(result.isConfirmed);
+      });
+    });
   }
 
 }

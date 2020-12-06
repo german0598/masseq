@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/general.service';
 import { Lista } from '../../models/lista';
 import Swal from 'sweetalert2';
+import { Cliente } from '../../models/cliente';
 
 @Component({
   selector: 'app-form-cliente',
@@ -14,7 +15,7 @@ export class FormClienteComponent implements OnInit {
 
   formCliente: FormGroup = new FormGroup({});
   idCliente: number = null;
-  tiposDeDocumento: Lista[] = [{ id: 1, nombre: 'C.C' }, { id: 2, nombre: 'Pasaporte' }];
+  tiposDeDocumento: Lista[] = [{ id: 1, nombre: 'C.C.' }, { id: 2, nombre: 'Pasaporte' }];
   departamentos: Lista[] = [{ id: 1, nombre: 'Huila' }, { id: 2, nombre: 'Ibague' }];
   municipios: Lista[] = [{ id: 1, nombre: 'Neiva' }, { id: 2, nombre: 'Aipe' }];
   tipoDocSelected = null;
@@ -31,10 +32,6 @@ export class FormClienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-  }
-
-  probando(event): void {
-    console.log('EVENTO: ', event);
   }
 
   createForm(): void{
@@ -60,37 +57,49 @@ export class FormClienteComponent implements OnInit {
   }
 
   obtenerIdCliente(): void{
-    this.route.params.subscribe((param) => this.idCliente = Number(param.id) );
-  }
-
-  cargarInfoCliente(): void {
-    this.formCliente.setValue({
-      nombres: 'Germán David Aviles Paipa',
-      tipoDocumento: 2,
-      numeroDocumento: 1075311762,
-      departmento: 2,
-      municipio: 1,
-      direccion: 'Calle 47 # 8 - 63P',
-      email: 'german.aviles06@hotmail.com',
-      telefone: 3163761560
+    this.route.params.subscribe((param) => {
+      this.idCliente = param.id ? Number(param.id) : null;
     });
   }
 
-  cargarListas(): void {
+  cargarInfoCliente(): void {
+    this.generalService.obtenerUnCliente( this.idCliente ).subscribe( (cliente: Cliente) => {
+      this.formCliente.setValue({
+        nombres: cliente.nombres,
+        tipoDocumento: cliente.tipoDocumento,
+        numeroDocumento: cliente.numeroDocumento,
+        departmento: cliente.departmento,
+        municipio: cliente.municipio,
+        direccion: cliente.direccion,
+        email: cliente.email,
+        telefone: cliente.telefone
+      });
+    });
+  }
 
+  cargarMunicipios( event ): void {
+    console.log('CARGAR MUNICIPIOS: ', event.target.value);
   }
 
   guardarCliente(): void {
-    console.log('VALIDO: ', this.formCliente.valid);
-    console.log('FOM: ', this.formCliente);
-    console.log('==>', this.formCliente.controls.tipoDocumento.hasError( 'required' ) );
-    // if ( !this.formCliente.valid ) {
-    //   return;
-    // }
-    // const request = this.formCliente.getRawValue();
-    // Swal.fire({title: 'Perfecto', icon: 'success', text: 'El cliente ha sido creado con éxito'});
-    // this.router.navigate(['home']);
-    // this.formCliente.reset();
+    if ( !this.formCliente.valid ) {
+      Swal.fire({
+        title: 'Atención',
+        icon: 'error',
+        text: 'Por favor complete todos los campos antes de guardar'
+      });
+      return;
+    }
+    const request = this.formCliente.getRawValue();
+    this.generalService.guardarCliente( request, this.idCliente ).subscribe( () => {
+      this.router.navigate(['home']);
+      this.formCliente.reset();
+      Swal.fire({
+        title: 'Perfecto',
+        icon: 'success',
+        text: 'El cliente ha sido creado con éxito'
+      });
+    });
   }
 
   mostrarErrorInput( control: string ): boolean {

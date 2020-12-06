@@ -33,7 +33,7 @@
       <!-- Departamento -->
       <div class="form-group col-md-4">
         <label class="col-form-label">Departamento</label>
-        <select class="form-control form-control-sm" formControlName="departmento">
+        <select class="form-control form-control-sm" formControlName="departmento" (change)="cargarMunicipios($event)">
           <option *ngFor="let departamento of departamentos" [value]="departamento.id">
             {{ departamento.nombre }}
           </option>
