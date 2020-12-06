@@ -75,6 +75,16 @@ export class FormClienteComponent implements OnInit {
         telefone: cliente.telefone
       });
     });
+    this.formCliente.setValue({
+      nombres: 'Germán David Aviles Paipa',
+      tipoDocumento: 2,
+      numeroDocumento: 1075311762,
+      departmento: 2,
+      municipio: 1,
+      direccion: 'Calle 47 # 8 - 63P',
+      email: 'german.aviles06@hotmail.com',
+      telefone: 3163761560
+    });
   }
 
   cargarMunicipios( event ): void {

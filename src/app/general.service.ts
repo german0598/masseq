@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cliente } from './models/cliente';
 
@@ -8,7 +8,17 @@ import { Cliente } from './models/cliente';
 })
 export class GeneralService {
 
-  constructor( private http: HttpClient ) { }
+  public $loginUser: EventEmitter<any>;
+
+  constructor( private http: HttpClient ) {
+    this.$loginUser = new EventEmitter();
+    const token = localStorage.getItem('token_user');
+    if (token) {
+      this.$loginUser.emit(true);
+    } else {
+      this.$loginUser.emit(false);
+    }
+  }
 
   cargarClientes(): Observable<any> {
     return this.http.get('');

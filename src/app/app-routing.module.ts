@@ -9,10 +9,10 @@ import { HomeGuard } from './auth/home.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, canActivate: [  ] },
+  { path: 'home', component: HomeComponent, canActivate: [ HomeGuard ] },
   { path: 'login', component: LoginComponent, canActivate: [ AuthGuard ] },
-  { path: 'create', component: FormClienteComponent, canActivate: [  ] },
-  { path: 'edit/:id', component: FormClienteComponent, canActivate: [  ] },
+  { path: 'create', component: FormClienteComponent, canActivate: [ HomeGuard ] },
+  { path: 'edit/:id', component: FormClienteComponent, canActivate: [ HomeGuard ] },
   { path: '**', component: NotFoundComponent }
 ];
 

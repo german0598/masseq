@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from '../../general.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,11 @@ export class LoginComponent implements OnInit {
 
   formLogin: FormGroup = new FormGroup({});
 
-  constructor( private formBuilder: FormBuilder, private generalService: GeneralService ) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private generalService: GeneralService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -38,6 +43,8 @@ export class LoginComponent implements OnInit {
     const values = this.formLogin.getRawValue();
     this.generalService.iniciarSesion( values );
     localStorage.setItem('token_user', JSON.stringify(values) );
+    this.generalService.$loginUser.emit(true);
+    this.router.navigate(['home']);
   }
 
 }
