@@ -28,21 +28,7 @@ export class HomeComponent implements OnInit {
   }
 
   cargarClientes(): void {
-    this.clientes = [
-      {
-        id: 1234,
-        nombres: 'Germán David Aviles Paipa',
-        tipoDocumento: 'C.C',
-        numeroDocumento: 1075311762,
-        departmento: 'Huila',
-        municipio: 'Neiva',
-        direccion: 'Calle 47 # 8 - 63P',
-        email: 'german.aviles06@hotmail.com',
-        telefone: 3163761560
-      }
-    ];
-    // TODO: crear sevicio HTTP
-    // this.generalService
+    this.clientes = this.generalService.getClientes();
   }
 
   async eliminarCliente( idCliente: number ): Promise<any> {

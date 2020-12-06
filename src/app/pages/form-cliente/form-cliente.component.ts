@@ -15,9 +15,9 @@ export class FormClienteComponent implements OnInit {
 
   formCliente: FormGroup = new FormGroup({});
   idCliente: number = null;
-  tiposDeDocumento: Lista[] = [{ id: 1, nombre: 'C.C.' }, { id: 2, nombre: 'Pasaporte' }];
-  departamentos: Lista[] = [{ id: 1, nombre: 'Huila' }, { id: 2, nombre: 'Ibague' }];
-  municipios: Lista[] = [{ id: 1, nombre: 'Neiva' }, { id: 2, nombre: 'Aipe' }];
+  tiposDeDocumento: Lista[];
+  departamentos: Lista[];
+  municipios: Lista[];
   tipoDocSelected = null;
 
   constructor(
@@ -28,10 +28,17 @@ export class FormClienteComponent implements OnInit {
   )
   {
     this.obtenerIdCliente();
+    this.cargarListas();
   }
 
   ngOnInit(): void {
     this.createForm();
+  }
+
+  cargarListas(): void {
+    this.tiposDeDocumento = this.generalService.tiposDeDocumento;
+    this.departamentos = this.generalService.departamentos;
+    this.municipios = this.generalService.municipios;
   }
 
   createForm(): void{
@@ -63,27 +70,28 @@ export class FormClienteComponent implements OnInit {
   }
 
   cargarInfoCliente(): void {
-    this.generalService.obtenerUnCliente( this.idCliente ).subscribe( (cliente: Cliente) => {
-      this.formCliente.setValue({
-        nombres: cliente.nombres,
-        tipoDocumento: cliente.tipoDocumento,
-        numeroDocumento: cliente.numeroDocumento,
-        departmento: cliente.departmento,
-        municipio: cliente.municipio,
-        direccion: cliente.direccion,
-        email: cliente.email,
-        telefone: cliente.telefone
-      });
-    });
+    // this.generalService.obtenerUnCliente( this.idCliente ).subscribe( (cliente: Cliente) => {
+    //   this.formCliente.setValue({
+    //     nombres: cliente.nombres,
+    //     tipoDocumento: cliente.tipoDocumento,
+    //     numeroDocumento: cliente.numeroDocumento,
+    //     departmento: cliente.departmento,
+    //     municipio: cliente.municipio,
+    //     direccion: cliente.direccion,
+    //     email: cliente.email,
+    //     telefone: cliente.telefone
+    //   });
+    // });
+    const cliente = this.generalService.getCliente( this.idCliente );
     this.formCliente.setValue({
-      nombres: 'Germán David Aviles Paipa',
-      tipoDocumento: 2,
-      numeroDocumento: 1075311762,
-      departmento: 2,
-      municipio: 1,
-      direccion: 'Calle 47 # 8 - 63P',
-      email: 'german.aviles06@hotmail.com',
-      telefone: 3163761560
+      nombres: cliente.nombres,
+      tipoDocumento: cliente.tipoDocumento,
+      numeroDocumento: cliente.numeroDocumento,
+      departmento: cliente.departmento,
+      municipio: cliente.municipio,
+      direccion: cliente.direccion,
+      email: cliente.email,
+      telefone: cliente.telefone
     });
   }
 
