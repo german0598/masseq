@@ -9,7 +9,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { FormClienteComponent } from './pages/form-cliente/form-cliente.component';
 import { LoginComponent } from './pages/login/login.component';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
 
+export function playerFactory(): any {
+  return player;
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +27,9 @@ import { LoginComponent } from './pages/login/login.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    // LottieAnimationViewModule.forRoot()
+    LottieModule.forRoot({ player: playerFactory })
   ],
   providers: [],
   bootstrap: [AppComponent]
