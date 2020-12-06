@@ -32,4 +32,8 @@ export class GeneralService {
   obtenerMunicipios( idDepartamento: number ): Observable<any> {
     return this.http.get('');
   }
+
+  iniciarSesion( usuario ): Observable<any> {
+    return this.http.post('', usuario);
+  }
 }
